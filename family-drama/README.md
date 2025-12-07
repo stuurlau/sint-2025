@@ -1,75 +1,29 @@
-# React + TypeScript + Vite
+# Family Drama Eliminator
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A tiny React + Vite game where you explode floating heads until the family drama ends. Built with TypeScript, React Compiler, and a celebratory win overlay (party poppers included).
 
-Currently, two official plugins are available:
+## Available scripts
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+| Command | Description |
+| --- | --- |
+| `npm run dev` | Start the Vite dev server with HMR. |
+| `npm run build` | Type-check and build for production (no deploy side-effects). |
+| `npm run preview` | Preview the latest production build locally. |
+| `npm run lint` | Run ESLint across the repo. |
+| `npm run deploy` | Type-check, build with the GitHub Pages base, and publish via `vite-plugin-gh-pages`. |
 
-## React Compiler
+## Deploying to GitHub Pages
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+This project uses [`vite-plugin-gh-pages`](https://github.com/metonym/vite-plugin-gh-pages). Deployment happens when Vite runs in `pages` mode (triggered by `npm run deploy`).
 
-Note: This will impact Vite dev & build performances.
+1. Authenticate with GitHub (e.g., `gh auth login`) so the plugin can push to the `gh-pages` branch.
+2. (Optional) Override the default base path (`/family-drama/`) by setting `VITE_GHPAGES_BASE`:
 
-## Expanding the ESLint configuration
+   ```bash
+   VITE_GHPAGES_BASE=/your-repo-name/ npm run deploy
+   ```
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+3. Run `npm run deploy`. This executes `tsc -b && vite build --mode pages`, adds the plugin during that build, and publishes `dist` to `gh-pages`.
+4. In your repository settings, point GitHub Pages to the `gh-pages` branch (`/` root).
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Local builds (`npm run build`) keep the base path at `/`, so you can continue to preview the app from the project root without the GitHub Pages prefix.

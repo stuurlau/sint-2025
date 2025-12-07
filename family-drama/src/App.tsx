@@ -1,34 +1,55 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useMemo, useState } from 'react'
+import FloatingHead from './components/FloatingHead'
 import './App.css'
 
+const TARGET_EXPLOSIONS = 5
+
 function App() {
-  const [count, setCount] = useState(0)
+  const [explodedHeads, setExplodedHeads] = useState(0)
+
+  const remainingHeads = useMemo(
+    () => Math.max(TARGET_EXPLOSIONS - explodedHeads, 0),
+    [explodedHeads],
+  )
+  const hasWon = explodedHeads >= TARGET_EXPLOSIONS
+  const remainingText = useMemo(
+    () => `Remaining family witches: ${remainingHeads}`,
+    [remainingHeads],
+  )
+
+  const handleHeadExploded = () => {
+    setExplodedHeads((current) => Math.min(current + 1, TARGET_EXPLOSIONS))
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <div className="app">
+      <header className="scoreboard">
+        <h1>Eliminate the family wench</h1>
+      </header>
+
+      <main className="game-area">
+        <FloatingHead onExplode={handleHeadExploded} disabled={hasWon} />
+
+        <section className="counter-card" aria-live="polite">
+          <span>{remainingText}</span>
+        </section>
+
+        {hasWon && (
+          <div className="victory-overlay" role="alert" aria-live="assertive">
+            <img
+              src="/poppers.gif"
+              alt="Animated party poppers celebrating your victory"
+              className="victory-overlay__poppers"
+            />
+
+            <div className="victory-overlay__card">
+              <h2>Congratulations, you've eliminated all family drama!</h2>
+              <p>U find uw prijs, tussen het ijs!</p>
+            </div>
+          </div>
+        )}
+      </main>
+    </div>
   )
 }
 
