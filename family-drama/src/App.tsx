@@ -37,7 +37,7 @@ function App() {
         {hasWon && (
           <div className="victory-overlay" role="alert" aria-live="assertive">
             <img
-              src="/poppers.gif"
+              src={`${import.meta.env.BASE_URL}poppers.gif`}
               alt="Animated party poppers celebrating your victory"
               className="victory-overlay__poppers"
             />

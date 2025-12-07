@@ -2,7 +2,7 @@ import { defineConfig, type PluginOption } from 'vite'
 import react from '@vitejs/plugin-react'
 import { ghPages } from 'vite-plugin-gh-pages'
 
-const DEFAULT_REPO_BASE = '/family-drama/'
+const DEFAULT_REPO_BASE = '/sint-2025/'
 
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {

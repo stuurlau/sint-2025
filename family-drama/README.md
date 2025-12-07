@@ -17,7 +17,7 @@ A tiny React + Vite game where you explode floating heads until the family drama
 This project uses [`vite-plugin-gh-pages`](https://github.com/metonym/vite-plugin-gh-pages). Deployment happens when Vite runs in `pages` mode (triggered by `npm run deploy`).
 
 1. Authenticate with GitHub (e.g., `gh auth login`) so the plugin can push to the `gh-pages` branch.
-2. (Optional) Override the default base path (`/family-drama/`) by setting `VITE_GHPAGES_BASE`:
+2. (Optional) Override the default base path (`/sint-2025/`) by setting `VITE_GHPAGES_BASE`:
 
    ```bash
    VITE_GHPAGES_BASE=/your-repo-name/ npm run deploy

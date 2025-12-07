@@ -129,10 +129,10 @@ export const FloatingHead = ({ disabled = false, onExplode }: FloatingHeadProps)
       aria-label="Explode the mean head"
     >
       <div className="floating-head__sprite">
-        <img src="/heks.png" alt="Mean family member" className="floating-head__image" />
+        <img src={`${import.meta.env.BASE_URL}heks.png`} alt="Mean family member" className="floating-head__image" />
         {isExploding && (
           <img
-            src="/explosion.gif"
+            src={`${import.meta.env.BASE_URL}explosion.gif`}
             alt=""
             aria-hidden="true"
             className="floating-head__explosion"
