@@ -1,8 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 
+export type HeadType = 'enemy' | 'friendly'
+
 type FloatingHeadProps = {
+  id: string
+  imageSrc: string
+  imageAlt: string
+  type: HeadType
   disabled?: boolean
-  onExplode: () => void
+  onExplode: (id: string, type: HeadType) => void
 }
 
 type Position = {
@@ -30,7 +36,14 @@ const randomPosition = (): Position => ({
   y: randomBetween(10, 70),
 })
 
-export const FloatingHead = ({ disabled = false, onExplode }: FloatingHeadProps) => {
+export const FloatingHead = ({
+  id,
+  imageSrc,
+  imageAlt,
+  type,
+  disabled = false,
+  onExplode,
+}: FloatingHeadProps) => {
   const [position, setPosition] = useState<Position>(() => randomPosition())
   const [isExploding, setIsExploding] = useState(false)
   const frameRef = useRef<number | undefined>(undefined)
@@ -105,7 +118,7 @@ export const FloatingHead = ({ disabled = false, onExplode }: FloatingHeadProps)
     if (disabled || isExploding) return
 
     setIsExploding(true)
-    onExplode()
+    onExplode(id, type)
 
     if (explosionTimeoutRef.current) {
       window.clearTimeout(explosionTimeoutRef.current)
@@ -116,9 +129,13 @@ export const FloatingHead = ({ disabled = false, onExplode }: FloatingHeadProps)
     }, 500)
   }
 
+  const ariaLabel = type === 'enemy' 
+    ? 'Klik om de heks te raken' 
+    : `Niet schieten! Dit is ${imageAlt}`
+
   return (
     <button
-      className={`floating-head ${isExploding ? 'exploding' : ''}`}
+      className={`floating-head ${isExploding ? 'exploding' : ''} floating-head--${type}`}
       style={{
         left: `${position.x}%`,
         top: `${position.y}%`,
@@ -126,10 +143,14 @@ export const FloatingHead = ({ disabled = false, onExplode }: FloatingHeadProps)
       }}
       type="button"
       onClick={handleExplode}
-      aria-label="Explode the mean head"
+      aria-label={ariaLabel}
     >
       <div className="floating-head__sprite">
-        <img src={`${import.meta.env.BASE_URL}heks.png`} alt="Mean family member" className="floating-head__image" />
+        <img 
+          src={`${import.meta.env.BASE_URL}${imageSrc}`} 
+          alt={imageAlt} 
+          className="floating-head__image"
+        />
         {isExploding && (
           <img
             src={`${import.meta.env.BASE_URL}explosion.gif`}
@@ -144,4 +165,3 @@ export const FloatingHead = ({ disabled = false, onExplode }: FloatingHeadProps)
 }
 
 export default FloatingHead
-

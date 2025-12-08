@@ -98,6 +98,67 @@
   letter-spacing: 0.02em;
 }
 
+.gameover-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(194, 65, 12, 0.18);
+  backdrop-filter: blur(4px);
+  animation: overlay-fade 320ms ease forwards;
+}
+
+.gameover-overlay__card {
+  background: var(--retro-panel);
+  color: var(--retro-ink);
+  padding: clamp(1.75rem, 4vw, 2.75rem) clamp(1.5rem, 6vw, 3.5rem);
+  border-radius: 1.25rem;
+  text-align: center;
+  box-shadow: 0 25px 55px rgba(0, 0, 0, 0.2);
+  border: 2px solid var(--retro-red);
+  max-width: min(480px, 90vw);
+  animation: card-pop 360ms ease-out 80ms forwards;
+  opacity: 0;
+}
+
+.gameover-overlay__card h2 {
+  margin: 0 0 0.75rem;
+  font-size: clamp(1.5rem, 5vw, 2.25rem);
+  color: var(--retro-red);
+  letter-spacing: 0.04em;
+}
+
+.gameover-overlay__card p {
+  margin: 0 0 1.5rem;
+  font-size: clamp(1rem, 3vw, 1.2rem);
+  letter-spacing: 0.02em;
+}
+
+.gameover-overlay__restart {
+  background: var(--retro-red);
+  color: #fff;
+  border: none;
+  padding: 0.85rem 2rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 180ms ease, transform 120ms ease;
+}
+
+.gameover-overlay__restart:hover {
+  background: #a33609;
+  transform: scale(1.04);
+}
+
+.gameover-overlay__restart:active {
+  transform: scale(0.98);
+}
+
 .counter-card {
   position: absolute;
   left: clamp(1rem, 3vw, 2rem);
@@ -309,5 +370,19 @@
   .counter-card {
     font-size: 0.85rem;
     letter-spacing: 0.05em;
+  }
+
+  .gameover-overlay__card {
+    padding: 1.25rem;
+    width: 100%;
+    max-width: 20rem;
+  }
+
+  .gameover-overlay__card h2 {
+    font-size: 1.3rem;
+  }
+
+  .gameover-overlay__card p {
+    font-size: 0.95rem;
   }
 }
